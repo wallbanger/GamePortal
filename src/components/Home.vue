@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <h1>{{ msg }}</h1>
-        <div class="banner">banner</div>
+        <div class="banner">Home Banner</div>
     </div>
 </template>
 
@@ -10,7 +10,7 @@
         name: 'home',
         data () {
             return {
-                msg: 'Game Portal'
+                msg: 'Home'
             }
         }
     }
