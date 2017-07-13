@@ -1,5 +1,5 @@
 <template>
-    <div class="hello">
+    <div class="gamelist">
         <h1>{{ msg }}</h1>
         <p>Game list</p>
     </div>
@@ -7,7 +7,7 @@
 
 <script>
     export default {
-        name: 'page',
+        name: 'gamelist',
         data () {
             return {
                 msg: 'Games'
