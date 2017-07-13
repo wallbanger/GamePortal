@@ -3,8 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueResource from 'vue-resource'
+import VueProgressBar from 'vue-progressbar'
 
-Vue.config.productionTip = false
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '2px'
+});
+
+Vue.use(VueResource);
+
+Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
@@ -12,4 +22,4 @@ new Vue({
     router,
     template: '<App/>',
     components: {App}
-})
+});
