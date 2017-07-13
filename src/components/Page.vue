@@ -1,5 +1,6 @@
 <template>
     <div class="page">
+        <v-header></v-header>
         <h1>{{ msg }}</h1>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquam?</p>
         <span class="btn" v-on:click="getUsers()">Show users</span>
@@ -9,8 +10,13 @@
 </template>
 
 <script>
+    import Header from './Header'
+
     export default {
         name: 'page',
+        components: {
+            'v-header': Header
+        },
         data () {
             return {
                 msg: 'Page',

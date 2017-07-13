@@ -6,6 +6,9 @@
             <input type="text" placeholder="password">
             <input type="submit">
         </form>
+        <router-link to="/">
+            <div class="close">close</div>
+        </router-link>
     </div>
 </template>
 
@@ -33,6 +36,12 @@
     input {
         margin-bottom: 10px;
         padding: 5px;
+    }
+
+    .close {
+        position: absolute;
+        top: 58px;
+        right: 20px;
     }
 
 </style>
