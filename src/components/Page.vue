@@ -11,6 +11,7 @@
 
 <script>
     import Header from './Header'
+    import auth from '../auth'
 
     export default {
         name: 'page',
@@ -25,21 +26,10 @@
         },
         methods: {
             getUsers() {
-                this.$Progress.start()
-                this.$http.get('http://localhost:8081/usersList', []).then(response => {
-                    console.log(response.status, response.body);
-                    this.users = response.body;
-                    this.$Progress.finish()
-                }, response => {
-                    console.log('Error');
-                });
+                auth.getUsers(this);
             },
             deleteUser() {
-                this.$http.delete('http://localhost:8081/deleteUser/4', []).then(response => {
-                    console.log(response.status, response.body);
-            }, response => {
-                    console.log('Error');
-                });
+                auth.deleteUser(this);
             }
         }
     }

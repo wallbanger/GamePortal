@@ -8,7 +8,7 @@ var app = express();
 
 app.use(cors());
 
-var dataJson = __dirname + '/' + 'data.json';
+var users = __dirname + '/' + 'users.json';
 
 app.set('port', 8081);
 
@@ -18,17 +18,17 @@ http.createServer(app).listen(app.get('port'), function(){
 
 // Middleware
 
-app.get('/usersList', function (req, res) {
-    fs.readFile( dataJson, 'utf8', function (err, data) {
+app.get('/users_list', function (req, res) {
+    fs.readFile( users, 'utf8', function (err, data) {
         res.end( data );
     });
 });
 
-app.delete('/deleteUser/:number', function (req, res) {
-    fs.readFile( dataJson, 'utf8', function (err, data) {
+app.delete('/delete_user/:number', function (req, res) {
+    fs.readFile( users, 'utf8', function (err, data) {
         data = JSON.parse( data );
         data.splice(parseInt(req.params.number) - 1, 1);
-        fs.writeFile(dataJson, JSON.stringify(data), function (err) {
+        fs.writeFile(users, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
             res.end( JSON.stringify(data));
         });

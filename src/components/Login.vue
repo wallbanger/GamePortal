@@ -1,11 +1,23 @@
 <template>
     <div class="login">
         <h1>{{ msg }}</h1>
-        <form action="">
-            <input type="text" placeholder="email">
-            <input type="text" placeholder="password">
-            <input type="submit">
-        </form>
+        <div class="form-group">
+            <input
+                type="text"
+                class="form-control"
+                placeholder="Enter your username"
+                v-model="credentials.username"
+            >
+        </div>
+        <div class="form-group">
+            <input
+                type="password"
+                class="form-control"
+                placeholder="Enter your password"
+                v-model="credentials.password"
+            >
+        </div>
+        <button class="btn btn-primary" @click="submit()">Access</button>
         <router-link to="/">
             <div class="close">close</div>
         </router-link>
@@ -13,11 +25,31 @@
 </template>
 
 <script>
+    import auth from '../auth'
+
     export default {
         name: 'login',
         data () {
             return {
-                msg: 'Login'
+                msg: 'Login',
+                credentials: {
+                    username: '',
+                    password: ''
+                },
+                error: ''
+            }
+        },
+        methods: {
+
+            submit() {
+
+                var credentials = {
+                    username: this.credentials.username,
+                    password: this.credentials.password
+                }
+
+                auth.login(this, credentials)
+
             }
         }
     }
