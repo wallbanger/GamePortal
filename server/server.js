@@ -7,18 +7,30 @@ var fs = require('fs');
 var app = express();
 
 app.use(cors());
-
-var users = __dirname + '/' + 'users.json';
-
 app.set('port', 8081);
-
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
 
+var users = __dirname + '/' + 'users.json';
+
+function getUserScheme(req) {
+
+    var username;
+
+    if (req.body.username) {
+        username = req.body.username;
+        userSearch = { username: username };
+    }
+
+    return {
+        username: username
+    }
+}
+
 // Middleware
 
-app.get('/users_list', function (req, res) {
+app.get('/users_list/', function (req, res) {
     fs.readFile( users, 'utf8', function (err, data) {
         res.end( data );
     });
@@ -30,7 +42,21 @@ app.delete('/delete_user/:number', function (req, res) {
         data.splice(parseInt(req.params.number) - 1, 1);
         fs.writeFile(users, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
-            res.end( JSON.stringify(data));
+            res.end(JSON.stringify(data));
+        });
+    });
+});
+
+app.post('/add_user/', function (req, res) {
+
+    var userScheme = getUserScheme(req);
+
+    fs.readFile( users, 'utf8', function (err, data) {
+        data = JSON.parse( data );
+        data.concat(userScheme);
+        fs.writeFile(users, JSON.stringify(data), function (err) {
+            if (err) return console.log(err);
+            res.end(JSON.stringify(data));
         });
     });
 });

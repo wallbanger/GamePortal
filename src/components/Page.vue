@@ -5,6 +5,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, aliquam?</p>
         <span class="btn" v-on:click="getUsers()">Show users</span>
         <span class="btn" v-on:click="deleteUser()">Delete user number 4</span>
+        <span class="btn" v-on:click="register()">reg</span>
         <div>{{ users }}</div>
     </div>
 </template>
@@ -30,6 +31,9 @@
             },
             deleteUser() {
                 auth.deleteUser(this);
+            },
+            register() {
+                auth.register(this)
             }
         }
     }
