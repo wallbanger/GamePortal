@@ -32,6 +32,8 @@ function getUserScheme(req) {
 
 app.get('/users_list/', function (req, res) {
     fs.readFile( users, 'utf8', function (err, data) {
+
+        console.log(data);
         res.end( data );
     });
 });
@@ -52,6 +54,7 @@ app.post('/add_user/', function (req, res) {
     var userScheme = getUserScheme(req);
 
     fs.readFile( users, 'utf8', function (err, data) {
+        console.log('data', data);
         data = JSON.parse( data );
         data.concat(userScheme);
         fs.writeFile(users, JSON.stringify(data), function (err) {

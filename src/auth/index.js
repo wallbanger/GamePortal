@@ -36,9 +36,9 @@ export default {
     register(context) {
         context.$Progress.start()
 
-        context.$http.post(SIGNUP_URL, [{ username: 'sss' }]).then(response => {
-            JSON.parse(response.body)
-            console.log('ss')
+        context.$http.post(SIGNUP_URL, { username: 'sss' }).then(response => {
+            var arr = JSON.parse(response.body)
+            console.log(arr);
         }, response => {
             console.error('Error')
             context.$Progress.fail()
