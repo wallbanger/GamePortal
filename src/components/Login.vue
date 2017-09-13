@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <h1>{{ msg }}</h1>
+        <h1>{{ title }}</h1>
         <div class="form-group">
             <input
                 type="text"
@@ -31,7 +31,7 @@
         name: 'login',
         data () {
             return {
-                msg: 'Login',
+                title: 'Login',
                 credentials: {
                     username: '',
                     password: ''
@@ -42,14 +42,13 @@
         methods: {
 
             submit() {
-
                 var credentials = {
                     username: this.credentials.username,
                     password: this.credentials.password
                 }
 
                 auth.login(this, credentials)
-
+                console.log(credentials);
             }
         }
     }

@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:8081/'
 const DELETE_URL = API_URL + 'delete_user/'
 const USERS_URL = API_URL + 'users_list/'
-const SIGNUP_URL = API_URL + 'add_user'
+const SIGNUP_URL = API_URL + 'add_user/'
 
 export default {
     getUsers(context) {
@@ -10,13 +10,8 @@ export default {
         context.$http.get(USERS_URL).then(response => {
             context.users = response.body;
             context.$Progress.finish()
-
-            // ToDo: remove
-            var arr = JSON.parse(response.body)
-            console.log(arr);
-
         }, response => {
-            console.error('Error')
+            console.error('Get users list error')
             context.$Progress.fail()
         });
     },
@@ -25,32 +20,22 @@ export default {
         context.$Progress.start()
 
         context.$http.delete(DELETE_URL + '2').then(response => {
-            console.log(response.status, response.body);
             context.$Progress.finish()
         }, response => {
-            console.error('Error')
+            console.error('Delete user error')
             context.$Progress.fail()
         });
     },
 
-    register(context) {
+    register(context, creds) {
         context.$Progress.start()
 
-        // context.$http.put(SIGNUP_URL, { username: 'sss' }).then(response => {
-        //     var arr = JSON.parse(response.body)
-        //     console.log(arr);
-        // }, response => {
-        //     console.error('Error')
-        //     context.$Progress.fail()
-        // });
-
-        context.$http.post(SIGNUP_URL, {}, (data) => {
-
-            console.log(data);
-
-        }).error((err) => {
-            console.log(this.$http.headers.common['X-CSRF-TOKEN'])
-            context.error = err
-        })
+        context.$http.post(SIGNUP_URL, creds).then(response => {
+            var arr = response.body
+            console.log(arr, response.status, response.statusText);
+        }, response => {
+            console.error('Register error')
+            context.$Progress.fail()
+        });
     }
 }

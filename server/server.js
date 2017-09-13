@@ -3,11 +3,14 @@ var http = require('http');
 var path = require('path');
 var cors = require('cors');
 var fs = require('fs');
+var bodyParser = require('body-parser');
 
 var app = express();
-
+app.use(bodyParser());
 app.use(cors());
+
 app.set('port', 8081);
+
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
@@ -15,10 +18,7 @@ http.createServer(app).listen(app.get('port'), function(){
 var users = __dirname + '/' + 'users.json';
 
 function getUserScheme(req) {
-
     var username;
-
-    console.log(req.body);
 
     if (req.body.username) {
         username = req.body.username;
@@ -32,16 +32,14 @@ function getUserScheme(req) {
 // Middleware
 
 app.get('/users_list/', function (req, res) {
-    fs.readFile( users, 'utf8', function (err, data) {
-
-        console.log(data);
-        res.end( data );
+    fs.readFile(users, 'utf8', function (err, data) {
+        res.end(data);
     });
 });
 
 app.delete('/delete_user/:number', function (req, res) {
-    fs.readFile( users, 'utf8', function (err, data) {
-        data = JSON.parse( data );
+    fs.readFile(users, 'utf8', function (err, data) {
+        data = JSON.parse(data);
         data.splice(parseInt(req.params.number) - 1, 1);
         fs.writeFile(users, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
@@ -50,17 +48,16 @@ app.delete('/delete_user/:number', function (req, res) {
     });
 });
 
-app.post('add_user', function (req, res) {
-
-    var userScheme = getUserScheme(req);
-
-    fs.readFile( users, 'utf8', function (err, data) {
-        console.log('data', data);
-        data = JSON.parse( data );
-        data.concat(userScheme);
-        fs.writeFile(users, JSON.stringify(data), function (err) {
-            if (err) return console.log(err);
-            res.end(JSON.stringify(data));
+app.post('/add_user/', function (req, res) {
+    fs.readFile(users, 'utf8', function (err, data) {
+        if (err) return console.log(err, 'add user error');
+        var userScheme = getUserScheme(req);
+        var newData;
+        data = JSON.parse(data);
+        newData = data.concat(userScheme);
+        fs.writeFile(users, JSON.stringify(newData), function (err) {
+            if (err) return console.log(err, 'add user error fs');
+            res.end(JSON.stringify(newData));
         });
     });
 });
