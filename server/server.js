@@ -18,9 +18,10 @@ function getUserScheme(req) {
 
     var username;
 
+    console.log(req.body);
+
     if (req.body.username) {
         username = req.body.username;
-        userSearch = { username: username };
     }
 
     return {
@@ -49,7 +50,7 @@ app.delete('/delete_user/:number', function (req, res) {
     });
 });
 
-app.post('/add_user/', function (req, res) {
+app.post('add_user', function (req, res) {
 
     var userScheme = getUserScheme(req);
 

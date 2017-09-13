@@ -1,7 +1,7 @@
 const API_URL = 'http://localhost:8081/'
 const DELETE_URL = API_URL + 'delete_user/'
 const USERS_URL = API_URL + 'users_list/'
-const SIGNUP_URL = API_URL + 'add_user/'
+const SIGNUP_URL = API_URL + 'add_user'
 
 export default {
     getUsers(context) {
@@ -36,12 +36,21 @@ export default {
     register(context) {
         context.$Progress.start()
 
-        context.$http.post(SIGNUP_URL, { username: 'sss' }).then(response => {
-            var arr = JSON.parse(response.body)
-            console.log(arr);
-        }, response => {
-            console.error('Error')
-            context.$Progress.fail()
-        });
+        // context.$http.put(SIGNUP_URL, { username: 'sss' }).then(response => {
+        //     var arr = JSON.parse(response.body)
+        //     console.log(arr);
+        // }, response => {
+        //     console.error('Error')
+        //     context.$Progress.fail()
+        // });
+
+        context.$http.post(SIGNUP_URL, {}, (data) => {
+
+            console.log(data);
+
+        }).error((err) => {
+            console.log(this.$http.headers.common['X-CSRF-TOKEN'])
+            context.error = err
+        })
     }
 }
