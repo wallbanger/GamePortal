@@ -41,6 +41,7 @@ app.delete('/delete_user/:number', function (req, res) {
     fs.readFile(users, 'utf8', function (err, data) {
         data = JSON.parse(data);
         data.splice(parseInt(req.params.number) - 1, 1);
+
         fs.writeFile(users, JSON.stringify(data), function (err) {
             if (err) return console.log(err);
             res.end(JSON.stringify(data));
@@ -52,38 +53,13 @@ app.post('/add_user/', function (req, res) {
     fs.readFile(users, 'utf8', function (err, data) {
         if (err) return console.log(err, 'add user error');
         var userScheme = getUserScheme(req);
-        var newData;
-        data = JSON.parse(data);
-        newData = data.concat(userScheme);
-        fs.writeFile(users, JSON.stringify(newData), function (err) {
+        var createdUsers = JSON.parse(data).concat(userScheme);
+
+        fs.writeFile(users, JSON.stringify(createdUsers), function (err) {
             if (err) return console.log(err, 'add user error fs');
-            res.end(JSON.stringify(newData));
+            res.end(JSON.stringify(createdUsers));
         });
     });
-});
-
-app.use(function(req, res, next) {
-    if (req.url == '/') {
-        res.end("Hello");
-    } else {
-        next();
-    }
-});
-
-app.use(function(req, res, next) {
-    if (req.url == '/forbidden') {
-        next(new Error('wops, denied'));
-    } else {
-        next();
-    }
-});
-
-app.use(function(req, res, next) {
-    if (req.url == '/test') {
-        res.end('Test');
-    } else {
-        next();
-    }
 });
 
 app.use(function(req, res) {
