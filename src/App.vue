@@ -19,7 +19,7 @@
     }
 
     h1, h2 {
-        font-weight: normal;
+        font-weight: 400;
     }
 
     #app {
