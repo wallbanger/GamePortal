@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueResource from 'vue-resource'
 import VueProgressBar from 'vue-progressbar'
+import store from "./store";
 
 Vue.use(VueProgressBar, {
     color: 'rgb(143, 255, 199)',
@@ -20,6 +21,7 @@ Vue.config.productionTip = false;
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: {App}
 });
